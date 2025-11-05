@@ -49,7 +49,7 @@ public:
             throw std::out_of_range("Vertice fuera de rango");
         else {
             int count = 0;
-            // Recorremos la columna u de la matriz
+            // Se recorren la columna u de la matriz
             for (int i = 0; i < numVertices; i++) {
                 count += adjMatrix[i][u];
         }
