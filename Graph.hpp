@@ -3,20 +3,21 @@
 #include <stdexcept>
 
 class Graph {
-private:
+        private:
     int numVertices;
     std::vector<std::vector<int>> adjMatrix;
 
-public:
+    public:
     // Crea un vector de 2D n x n
     Graph(int n) : numVertices(n), adjMatrix(n, std::vector<int>(n, 0)) {}
 
     // Add a vertex from node u to node v
     void addEdge(int u, int v) {
         if (u >= 0 && u < numVertices && v >= 0 && v < numVertices) {
-            adjMatrix[u][v] = 1;
-        } else {
-            std::out_of_range("Vertice fuera de rango");
+        adjMatrix[u][v] = 1;
+       
+    } else {
+        std::out_of_range("Vertice fuera de rango");
         }
     }
 
@@ -26,30 +27,57 @@ public:
             for (int j = 0; j < numVertices; ++j) {
                 std::cout << adjMatrix[i][j] << " ";
             }
-            std::cout << "\n";
+        std::cout << "\n";
         }
     }
 
     // Implementar!! 
     // Devuelve la cantidad de aristas
     int numEdges() const {
-        return 0;
+        int count = 0;
+        for (const auto& row : adjMatrix) {
+            for (int val : row) {
+                count += val;
+            }
+        } 
+        return count; 
     }
 
     // Completa esta función
     // Devuelve el in-degree de un vertice
     int inDegree(int u) const {
         if (u < 0 || u >= numVertices)
-            throw std::out_of_range("Vertice fuera de rango");
+        throw std::out_of_range("Vertice fuera de rango");
         else {
+            int count = 0;
+            // Se recorren la columna u de la matriz
+            for (int i = 0; i < numVertices; i++) {
+                count += adjMatrix[i][u];
+                }
+        return count;
+            }
         }
-    }
+                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                            
 
     // Completa esta función
     // Devuelve cierto si u es el nodo con mayor inDegree.
     // En caso de que haya varios nodos que tengan el mayor inDegree,
     // devuelve true si u es uno de ellos
     bool isInfluencer(int u) const  {
+        if (u < 0 || u >= numVertices)
+        throw std::out_of_range("Vértice fuera de rango");
+
+        int maxIn = 0;
+        int uIn = inDegree(u);
+
+        // Encuentra el in-degree máximo del grafo
+        for (int i = 0; i < numVertices; i++) {
+            int d = inDegree(i);
+            if (d > maxIn) maxIn = d;
+        }
+
+        // Devuelve true si u tiene ese máximo
+        return uIn == maxIn;
     }
 };
-
